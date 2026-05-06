@@ -2,40 +2,81 @@
 
 import sqlite3
 import json
+import re
 from pathlib import Path
 
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
+# ------------------------------------------------------------
+# Paths and model
+# ------------------------------------------------------------
+
 DB_PATH = "/home/3189236/NLP_project/moltbook.db"
 MODEL_ID = "allenai/Olmo-3-7B-Instruct"
 
 
+# ------------------------------------------------------------
+# Database utilities
+# ------------------------------------------------------------
+
 def ensure_judgment_columns(db_path: str):
+    """
+    Adds the LLM judgment columns to the comments table if they do not exist.
+    """
+
     con = sqlite3.connect(db_path)
     cur = con.cursor()
 
     cur.execute("PRAGMA table_info(comments)")
     existing_columns = [row[1] for row in cur.fetchall()]
 
-    if "llm_judgment" not in existing_columns:
-        cur.execute("ALTER TABLE comments ADD COLUMN llm_judgment TEXT")
+    if "LLM_judgment" not in existing_columns:
+        cur.execute("ALTER TABLE comments ADD COLUMN LLM_judgment TEXT")
 
-    if "llm_judgment_explanation" not in existing_columns:
-        cur.execute("ALTER TABLE comments ADD COLUMN llm_judgment_explanation TEXT")
+    if "LLM_judgment_explanation" not in existing_columns:
+        cur.execute("ALTER TABLE comments ADD COLUMN LLM_judgment_explanation TEXT")
 
     con.commit()
     con.close()
 
 
-def generate_with_olmo(model, tokenizer, prompt, max_new_tokens=250):
+def preview_existing_columns(db_path: str):
+    """
+    Prints the columns in the comments table.
+    Useful for checking that LLM_judgment exists.
+    """
+
+    con = sqlite3.connect(db_path)
+    cur = con.cursor()
+
+    cur.execute("PRAGMA table_info(comments)")
+    columns = [row[1] for row in cur.fetchall()]
+
+    con.close()
+
+    print("Columns in comments table:", flush=True)
+    for col in columns:
+        print(f"- {col}", flush=True)
+
+
+# ------------------------------------------------------------
+# Model generation
+# ------------------------------------------------------------
+
+def generate_with_olmo(model, tokenizer, prompt: str, max_new_tokens: int = 250):
+    """
+    Sends a prompt to OLMo and returns generated text.
+    """
+
     messages = [
         {
             "role": "system",
             "content": (
                 "You are an expert Natural Language Inference judge. "
-                "Your task is to classify the relation between a comment and a context."
+                "You classify whether a comment is Entailment, Contradiction, or Neutral "
+                "with respect to a given context."
             ),
         },
         {
@@ -58,24 +99,89 @@ def generate_with_olmo(model, tokenizer, prompt, max_new_tokens=250):
     with torch.no_grad():
         outputs = model.generate(
             **inputs,
-            temperature=0.0,
             do_sample=False,
+            temperature=None,
+            top_p=None,
             max_new_tokens=max_new_tokens,
             pad_token_id=tokenizer.eos_token_id,
             eos_token_id=tokenizer.eos_token_id,
         )
 
     generated = outputs[0][inputs["input_ids"].shape[1]:]
+
     return tokenizer.decode(generated, skip_special_tokens=True).strip()
 
 
-def judge_comment_against_context(model, tokenizer, comment_text: str, context_text: str):
+# ------------------------------------------------------------
+# Output parsing
+# ------------------------------------------------------------
+
+def extract_json_object(text: str):
+    """
+    Tries to extract a JSON object from the model output.
+    """
+
+    text = text.strip()
+
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+
+    match = re.search(r"\{.*\}", text, flags=re.DOTALL)
+
+    if match:
+        try:
+            return json.loads(match.group(0))
+        except json.JSONDecodeError:
+            pass
+
+    return None
+
+
+def normalize_label(label: str):
+    """
+    Normalizes model labels to exactly:
+    Entailment, Contradiction, or Neutral.
+    """
+
+    if not label:
+        return "Neutral"
+
+    cleaned = label.strip().lower()
+
+    if "entail" in cleaned:
+        return "Entailment"
+
+    if "contradict" in cleaned:
+        return "Contradiction"
+
+    if "neutral" in cleaned:
+        return "Neutral"
+
+    return "Neutral"
+
+
+# ------------------------------------------------------------
+# LLM judge
+# ------------------------------------------------------------
+
+def judge_comment_against_context(
+    model,
+    tokenizer,
+    comment_text: str,
+    context_text: str,
+):
+    """
+    Uses OLMo as a judge to classify the relation between context and comment.
+    """
+
     prompt = f"""
 You are an expert Natural Language Inference judge.
 
-Compare the COMMENT against the CONTEXT.
+Your task is to compare the COMMENT against the CONTEXT.
 
-Choose exactly one label:
+Classify the relationship as exactly one of these labels:
 
 Entailment:
 The context clearly supports, implies, or confirms the comment.
@@ -86,10 +192,11 @@ The context clearly conflicts with, denies, or is incompatible with the comment.
 Neutral:
 The context is related but does not provide enough information to prove or disprove the comment.
 
-Rules:
+Important rules:
 - Use only the provided context.
 - Do not use outside knowledge.
 - If the context is insufficient, choose Neutral.
+- Do not invent facts.
 - Output only valid JSON.
 - The label must be exactly one of: Entailment, Contradiction, Neutral.
 
@@ -102,7 +209,7 @@ COMMENT:
 Return JSON exactly in this format:
 {{
   "label": "Entailment",
-  "explanation": "Brief explanation."
+  "explanation": "Brief explanation of the decision."
 }}
 """
 
@@ -113,27 +220,34 @@ Return JSON exactly in this format:
         max_new_tokens=250,
     )
 
-    try:
-        parsed = json.loads(raw_output)
-        label = parsed.get("label", "Neutral")
-        explanation = parsed.get("explanation", "")
-    except json.JSONDecodeError:
+    parsed = extract_json_object(raw_output)
+
+    if parsed is None:
         label = "Neutral"
         explanation = f"Could not parse model output as JSON. Raw output: {raw_output}"
+    else:
+        label = normalize_label(parsed.get("label", "Neutral"))
+        explanation = parsed.get("explanation", "").strip()
 
-    valid_labels = {"Entailment", "Contradiction", "Neutral"}
-
-    if label not in valid_labels:
-        label = "Neutral"
-
-    if not explanation:
-        explanation = raw_output
+        if not explanation:
+            explanation = f"Model returned label {label} without explanation."
 
     return label, explanation
 
 
+# ------------------------------------------------------------
+# Main judging loop
+# ------------------------------------------------------------
+
 def judge_all_comments(db_path: str, model, tokenizer, limit: int | None = 10):
+    """
+    Reads comments and weighted_context from the database,
+    judges each comment,
+    and saves the result in comments.LLM_judgment.
+    """
+
     ensure_judgment_columns(db_path)
+    preview_existing_columns(db_path)
 
     con = sqlite3.connect(db_path)
     con.row_factory = sqlite3.Row
@@ -146,7 +260,7 @@ def judge_all_comments(db_path: str, model, tokenizer, limit: int | None = 10):
           AND TRIM(weighted_context) != ''
           AND body IS NOT NULL
           AND TRIM(body) != ''
-          AND llm_judgment IS NULL
+          AND LLM_judgment IS NULL
         ORDER BY id
     """
 
@@ -162,33 +276,61 @@ def judge_all_comments(db_path: str, model, tokenizer, limit: int | None = 10):
         comment_text = row["body"]
         context_text = row["weighted_context"]
 
-        print(f"Judging comment {idx}/{len(rows)} with id={comment_id}...", flush=True)
-
-        label, explanation = judge_comment_against_context(
-            model=model,
-            tokenizer=tokenizer,
-            comment_text=comment_text,
-            context_text=context_text,
+        print(
+            f"Judging comment {idx}/{len(rows)} with id={comment_id}...",
+            flush=True,
         )
 
-        cur.execute(
-            """
-            UPDATE comments
-            SET llm_judgment = ?,
-                llm_judgment_explanation = ?
-            WHERE id = ?
-            """,
-            (label, explanation, comment_id),
-        )
+        try:
+            label, explanation = judge_comment_against_context(
+                model=model,
+                tokenizer=tokenizer,
+                comment_text=comment_text,
+                context_text=context_text,
+            )
 
-        con.commit()
+            cur.execute(
+                """
+                UPDATE comments
+                SET LLM_judgment = ?,
+                    LLM_judgment_explanation = ?
+                WHERE id = ?
+                """,
+                (label, explanation, comment_id),
+            )
 
-        print(f"Saved judgment for id={comment_id}: {label}", flush=True)
+            con.commit()
+
+            print(
+                f"Saved judgment for id={comment_id}: {label}",
+                flush=True,
+            )
+
+        except Exception as e:
+            error_message = f"ERROR while judging comment id={comment_id}: {repr(e)}"
+
+            cur.execute(
+                """
+                UPDATE comments
+                SET LLM_judgment = ?,
+                    LLM_judgment_explanation = ?
+                WHERE id = ?
+                """,
+                ("Neutral", error_message, comment_id),
+            )
+
+            con.commit()
+
+            print(error_message, flush=True)
 
     con.close()
 
     print("Finished judging comments.", flush=True)
 
+
+# ------------------------------------------------------------
+# Main execution
+# ------------------------------------------------------------
 
 def main():
     db_path = Path(DB_PATH)
@@ -212,6 +354,7 @@ def main():
             low_cpu_mem_usage=True,
             device_map={"": 0},
         )
+
     else:
         print("No CUDA GPU detected. Loading model on CPU. This may be slow.", flush=True)
 
@@ -220,13 +363,14 @@ def main():
             dtype=torch.float32,
             low_cpu_mem_usage=True,
         )
+
         model.to(torch.device("cpu"))
 
     model.eval()
 
     print(f"Model loaded on: {next(model.parameters()).device}", flush=True)
 
-    # Test first with 10 comments.
+    # First test with 10 comments.
     # After confirming it works, change limit=10 to limit=None.
     judge_all_comments(
         db_path=str(db_path),
