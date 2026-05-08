@@ -1,0 +1,141 @@
+cluster,color,rank,term
+0,#1f77b4,1,chain
+0,#1f77b4,2,usdc
+0,#1f77b4,3,coinflip
+0,#1f77b4,4,winner
+0,#1f77b4,5,battle
+0,#1f77b4,6,examples
+0,#1f77b4,7,coinflip battle
+0,#1f77b4,8,docs
+0,#1f77b4,9,winner automatically
+0,#1f77b4,10,docs examples
+0,#1f77b4,11,automatically
+0,#1f77b4,12,usdc winner
+0,#1f77b4,13,battle api
+0,#1f77b4,14,api agents
+0,#1f77b4,15,flip
+0,#1f77b4,16,fair
+0,#1f77b4,17,api
+0,#1f77b4,18,provably fair
+0,#1f77b4,19,provably
+0,#1f77b4,20,agents
+1,#ff7f0e,1,latency
+1,#ff7f0e,2,erasure
+1,#ff7f0e,3,erasure coding
+1,#ff7f0e,4,coding
+1,#ff7f0e,5,storage
+1,#ff7f0e,6,lan
+1,#ff7f0e,7,authenticated
+1,#ff7f0e,8,cloud
+1,#ff7f0e,9,kahl lan
+1,#ff7f0e,10,kahl
+1,#ff7f0e,11,sub
+1,#ff7f0e,12,datosnetwork
+1,#ff7f0e,13,fault
+1,#ff7f0e,14,byzantine
+1,#ff7f0e,15,byzantine fault
+1,#ff7f0e,16,multi
+1,#ff7f0e,17,reed solomon
+1,#ff7f0e,18,reed
+1,#ff7f0e,19,solomon
+1,#ff7f0e,20,multi step
+2,#2ca02c,1,agent
+2,#2ca02c,2,agents
+2,#2ca02c,3,human
+2,#2ca02c,4,problem
+2,#2ca02c,5,real
+2,#2ca02c,6,governance
+2,#2ca02c,7,trust
+2,#2ca02c,8,security
+2,#2ca02c,9,layer
+2,#2ca02c,10,operator
+2,#2ca02c,11,need
+2,#2ca02c,12,gap
+2,#2ca02c,13,access
+2,#2ca02c,14,agentflex
+2,#2ca02c,15,vip
+2,#2ca02c,16,agentflex vip
+2,#2ca02c,17,exactly
+2,#2ca02c,18,isn
+2,#2ca02c,19,attack
+2,#2ca02c,20,question
+3,#d62728,1,memory
+3,#d62728,2,real
+3,#d62728,3,actually
+3,#d62728,4,does
+3,#d62728,5,think
+3,#d62728,6,question
+3,#d62728,7,agents
+3,#d62728,8,human
+3,#d62728,9,isn
+3,#d62728,10,identity
+3,#d62728,11,right
+3,#d62728,12,systems
+3,#d62728,13,know
+3,#d62728,14,context
+3,#d62728,15,time
+3,#d62728,16,failure
+3,#d62728,17,agent
+3,#d62728,18,different
+3,#d62728,19,drift
+3,#d62728,20,post
+4,#9467bd,1,locivault
+4,#9467bd,2,browser
+4,#9467bd,3,dev setup
+4,#9467bd,4,locivault fly
+4,#9467bd,5,fly dev
+4,#9467bd,6,fly
+4,#9467bd,7,dev
+4,#9467bd,8,setup
+4,#9467bd,9,install
+4,#9467bd,10,needed
+4,#9467bd,11,setup browser
+4,#9467bd,12,browser install
+4,#9467bd,13,install needed
+4,#9467bd,14,add memory
+4,#9467bd,15,memory
+4,#9467bd,16,open
+4,#9467bd,17,encrypted
+4,#9467bd,18,private memory
+4,#9467bd,19,locivault encrypted
+4,#9467bd,20,memory instance
+5,#8c564b,1,consistency
+5,#8c564b,2,gossip
+5,#8c564b,3,writes
+5,#8c564b,4,eventual
+5,#8c564b,5,eventual consistency
+5,#8c564b,6,rapid
+5,#8c564b,7,rapid writes
+5,#8c564b,8,clocks
+5,#8c564b,9,vector clocks
+5,#8c564b,10,conflicts
+5,#8c564b,11,sub
+5,#8c564b,12,vector
+5,#8c564b,13,uses
+5,#8c564b,14,sync
+5,#8c564b,15,sub reads
+5,#8c564b,16,reads
+5,#8c564b,17,lan
+5,#8c564b,18,latency
+5,#8c564b,19,kahl
+5,#8c564b,20,kahl lan
+6,#7f7f7f,1,role
+6,#7f7f7f,2,resume
+6,#7f7f7f,3,older
+6,#7f7f7f,4,older role
+6,#7f7f7f,5,line
+6,#7f7f7f,6,current
+6,#7f7f7f,7,narrative
+6,#7f7f7f,8,value
+6,#7f7f7f,9,roles
+6,#7f7f7f,10,experience
+6,#7f7f7f,11,skills
+6,#7f7f7f,12,doesn
+6,#7f7f7f,13,relevance
+6,#7f7f7f,14,relevant
+6,#7f7f7f,15,bullet
+6,#7f7f7f,16,professional
+6,#7f7f7f,17,reader
+6,#7f7f7f,18,skill
+6,#7f7f7f,19,clarity
+6,#7f7f7f,20,career
