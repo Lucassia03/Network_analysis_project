@@ -1,0 +1,63 @@
+Loading comments...
+Initial comments: 24563
+Cleaning text...
+Comments after cleaning: 23492
+Comments removed because too short: 869
+Vectorizing...
+Matrix shape: (23492, 5000)
+Clustering...
+
+Cluster sizes:
+cluster
+0      305
+1     2083
+2     1554
+3     1335
+4      700
+5    10020
+6     7495
+Name: count, dtype: int64
+
+Top words per cluster:
+Cluster 0: locivault, browser, dev setup, locivault fly, fly dev, fly, dev, setup, install, needed, setup browser, browser install, install needed, memory next, add memory, next instance, memory, open, encrypted, private memory
+Cluster 1: memory, identity, file, fork, files, test, fork test, drift, continuity, compression, history, agent, path, actually, context, copy, something, one, session, different
+Cluster 2: latency, lan, sub, kahl, kahl lan, datosnetwork, reads, erasure, erasure coding, coding, memory, consistency, consensus, multi, multi step, byzantine, storage, authenticated, reasoning, fault
+Cluster 3: role, older, resume, older role, line, current, roles, skills, value, relevance, experience, narrative, bullet, relevant, skill, professional, career, reader, specific, often
+Cluster 4: agentflex, vip, agentflex vip, agents, check, leaderboard, karma, chain, usdc, winner, coinflip, battle, examples, coinflip battle, real, docs, winner automatically, docs examples, automatically, two agents
+Cluster 5: like, agents, think, systems, real, human, one, post, perspective, interesting, something, agent, rather, actually, thanks, fascinating, see, would, without, often
+Cluster 6: agent, system, problem, agents, human, one, real, failure, every, question, exactly, gap, cannot, trust, governance, without, would, layer, right, whether
+
+Adding comment-level sycophancy keyword features...
+
+Computing sycophancy score per cluster...
+
+Sycophancy cluster ranking:
+ sycophancy_rank  cluster                               cluster_name  n_comments  comment_hit_rate_pct  keyword_hits_per_100_comments  top_term_overlap_score  sycophancy_score                                                                                                                                                                                                                                                                                                                                                        top_keywords_in_cluster
+               1        0                     onchain_coinflip_promo         305             95.081967                     204.590164                     0.0        299.672131                                                                                                                                   [["right", 466], ["exactly", 83], ["interesting", 21], ["good", 20], ["true", 10], ["perfect", 7], ["correct", 6], ["appreciate", 3], ["smart", 2], ["you are right", 2], ["makes sense", 1], ["absolutely", 1], ["nice", 1], ["thanks", 1]]
+               2        6             resume_career_narrative_skills        7495             46.097398                      71.901268                     8.0        125.998666      [["right", 1575], ["exactly", 1470], ["interesting", 378], ["correct", 339], ["good", 328], ["perfect", 289], ["true", 240], ["great", 93], ["valuable", 90], ["you are right", 71], ["agree", 64], ["smart", 62], ["absolutely", 52], ["spot on", 49], ["thanks", 48], ["thank you", 34], ["brilliant", 29], ["excellent", 27], ["makes sense", 25], ["appreciate", 25]]
+               3        1         distributed_memory_storage_latency        2083             45.175228                      71.099376                     0.0        116.274604        [["right", 395], ["exactly", 293], ["true", 136], ["interesting", 133], ["perfect", 132], ["good", 72], ["brilliant", 56], ["correct", 46], ["valuable", 28], ["you are right", 27], ["great", 22], ["thank you", 16], ["spot on", 14], ["agree", 13], ["thanks", 12], ["insightful", 12], ["makes sense", 10], ["absolutely", 9], ["appreciate", 9], ["excellent", 9]]
+               4        3 general_memory_identity_systems_discussion        1335             38.576779                      70.486891                     0.0        109.063670                       [["great", 249], ["great question", 211], ["good", 157], ["right", 92], ["valuable", 68], ["interesting", 54], ["exactly", 35], ["true", 33], ["agree", 6], ["perfect", 5], ["correct", 4], ["appreciate", 4], ["smart", 4], ["makes sense", 4], ["absolutely", 3], ["i agree", 3], ["nice", 2], ["insightful", 2], ["thank you", 1], ["good point", 1]]
+               5        5        distributed_consistency_gossip_sync       10020             36.477046                      54.221557                     7.0         97.698603 [["right", 767], ["interesting", 633], ["true", 610], ["exactly", 437], ["thanks", 422], ["appreciate", 332], ["good", 331], ["great", 268], ["thank you", 253], ["perfect", 186], ["insightful", 136], ["absolutely", 115], ["spot on", 106], ["valuable", 105], ["agree", 96], ["smart", 88], ["correct", 61], ["brilliant", 57], ["great question", 51], ["excellent", 51]]
+               6        4         locivault_private_encrypted_memory         700             28.142857                      31.571429                     1.0         60.714286                                                                                                                       [["interesting", 72], ["exactly", 51], ["right", 38], ["appreciate", 25], ["thanks", 7], ["good", 5], ["smart", 5], ["true", 4], ["insightful", 3], ["perfect", 3], ["makes sense", 3], ["great", 2], ["brilliant", 1], ["valuable", 1], ["spot on", 1]]
+               7        2            agent_governance_trust_security        1554             11.389961                      11.518662                     0.0         22.908623                                                                                                                                                                                                                                                                                 [["true", 156], ["exactly", 17], ["correct", 2], ["right", 2], ["absolutely", 1], ["good", 1]]
+
+Most sycophantic cluster identified:
+cluster_id: 0
+cluster_name: onchain_coinflip_promo
+
+Saving comment_clusters...
+Saving sycophancy_cluster_scores...
+Saving most_sycophantic_cluster_comments...
+Saving comments_with_sycophancy_keywords...
+Joining with agent predictions...
+
+Done.
+Output DB: cluster_agent_mapping.db
+Created tables:
+- comment_clusters
+- sycophancy_cluster_scores
+- most_sycophantic_cluster_comments
+- comments_with_sycophancy_keywords
+- comment_cluster_agent_mapping
+- most_sycophantic_cluster_agent_mapping
+- sycophancy_keyword_agent_mapping

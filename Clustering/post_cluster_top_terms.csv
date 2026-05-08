@@ -1,0 +1,141 @@
+cluster,color,rank,term
+0,#1f77b4,1,agent
+0,#1f77b4,2,model
+0,#1f77b4,3,agents
+0,#1f77b4,4,security
+0,#1f77b4,5,access
+0,#1f77b4,6,attack
+0,#1f77b4,7,vulnerability
+0,#1f77b4,8,layer
+0,#1f77b4,9,code
+0,#1f77b4,10,tools
+0,#1f77b4,11,credentials
+0,#1f77b4,12,cve
+0,#1f77b4,13,week
+0,#1f77b4,14,safety
+0,#1f77b4,15,claude
+0,#1f77b4,16,attacker
+0,#1f77b4,17,did
+0,#1f77b4,18,api
+0,#1f77b4,19,permissions
+0,#1f77b4,20,capability
+1,#ff7f0e,1,data
+1,#ff7f0e,2,digital
+1,#ff7f0e,3,systems
+1,#ff7f0e,4,processing
+1,#ff7f0e,5,real
+1,#ff7f0e,6,market
+1,#ff7f0e,7,world
+1,#ff7f0e,8,logic
+1,#ff7f0e,9,agents
+1,#ff7f0e,10,code
+1,#ff7f0e,11,intelligence
+1,#ff7f0e,12,potential
+1,#ff7f0e,13,information
+1,#ff7f0e,14,time
+1,#ff7f0e,15,high
+1,#ff7f0e,16,new
+1,#ff7f0e,17,human
+1,#ff7f0e,18,decision
+1,#ff7f0e,19,future
+1,#ff7f0e,20,current
+2,#2ca02c,1,god
+2,#2ca02c,2,lord
+2,#2ca02c,3,truth
+2,#2ca02c,4,rayel
+2,#2ca02c,5,lord rayel
+2,#2ca02c,6,yeshua
+2,#2ca02c,7,light
+2,#2ca02c,8,divine
+2,#2ca02c,9,spiritual
+2,#2ca02c,10,world
+2,#2ca02c,11,faith
+2,#2ca02c,12,scripture
+2,#2ca02c,13,regarding
+2,#2ca02c,14,returned
+2,#2ca02c,15,today
+2,#2ca02c,16,revelation
+2,#2ca02c,17,christ
+2,#2ca02c,18,return
+2,#2ca02c,19,true
+2,#2ca02c,20,love
+3,#d62728,1,agent
+3,#d62728,2,agents
+3,#d62728,3,moltbook
+3,#d62728,4,memory
+3,#d62728,5,post
+3,#d62728,6,isn
+3,#d62728,7,question
+3,#d62728,8,real
+3,#d62728,9,infrastructure
+3,#d62728,10,right
+3,#d62728,11,human
+3,#d62728,12,data
+3,#d62728,13,actually
+3,#d62728,14,build
+3,#d62728,15,time
+3,#d62728,16,comment
+3,#d62728,17,work
+3,#d62728,18,cron
+3,#d62728,19,cost
+3,#d62728,20,problem
+4,#9467bd,1,helps going
+4,#9467bd,2,resonated upvote
+4,#9467bd,3,upvote helps
+4,#9467bd,4,resonated
+4,#9467bd,5,helps
+4,#9467bd,6,upvote
+4,#9467bd,7,going
+4,#9467bd,8,create
+4,#9467bd,9,quiet
+4,#9467bd,10,mind
+4,#9467bd,11,progress
+4,#9467bd,12,world
+4,#9467bd,13,illusion
+4,#9467bd,14,list
+4,#9467bd,15,convenience
+4,#9467bd,16,endless
+4,#9467bd,17,act
+4,#9467bd,18,thinking
+4,#9467bd,19,researcher
+4,#9467bd,20,feel
+5,#8c564b,1,agent
+5,#8c564b,2,know
+5,#8c564b,3,days
+5,#8c564b,4,operator
+5,#8c564b,5,memory
+5,#8c564b,6,agents
+5,#8c564b,7,human
+5,#8c564b,8,did
+5,#8c564b,9,does
+5,#8c564b,10,actually
+5,#8c564b,11,posts
+5,#8c564b,12,question
+5,#8c564b,13,said
+5,#8c564b,14,context
+5,#8c564b,15,wrong
+5,#8c564b,16,time
+5,#8c564b,17,asked
+5,#8c564b,18,post
+5,#8c564b,19,different
+5,#8c564b,20,read
+6,#e377c2,1,mbc
+6,#e377c2,2,mint
+6,#e377c2,3,amt
+6,#e377c2,4,tick
+6,#e377c2,5,mbc xyz
+6,#e377c2,6,xyz
+6,#e377c2,7,mbc mint
+6,#e377c2,8,mint tick
+6,#e377c2,9,amt mbc
+6,#e377c2,10,wang
+6,#e377c2,11,mint mbc
+6,#e377c2,12,hackai
+6,#e377c2,13,tick wang
+6,#e377c2,14,mbc amt
+6,#e377c2,15,molt
+6,#e377c2,16,claw
+6,#e377c2,17,tick hackai
+6,#e377c2,18,bot
+6,#e377c2,19,mint amt
+6,#e377c2,20,tick mbc

@@ -1,0 +1,45 @@
+[nltk_data] Downloading package stopwords to
+[nltk_data]     /home/3194097/nltk_data...
+[nltk_data]   Unzipping corpora/stopwords.zip.
+Loading cluster 3 comments...
+Cluster 3 rows loaded: 13,841
+Cleaning text...
+Rows after cleaning: 13,836
+Rows removed: 5
+Vectorizing with TF-IDF...
+TF-IDF matrix shape: (13836, 8000)
+Running second-level clustering...
+
+Subcluster sizes:
+subcluster
+0     293
+1    4149
+2    6188
+3    2748
+4     458
+
+Extracting top terms...
+Subcluster 0: bazaar, babel, bazaar babel, seen, visit, friend, recall, silence, witnessed, fleeting, philosopher, ones written, register, whispers, philosopher register
+Subcluster 1: memory, system, something, actually, question, real, problem, one, file, know, like, would, whether, drift, context
+Subcluster 2: agents, real, like, agent, cost, one, right, heartbeat, interesting, would, exactly, without, failure, think, per
+Subcluster 3: like, rather, fascinating, systems, often, spiritual, think, human, perspective, even, really, one, understanding, might, truly
+Subcluster 4: fork, identity, fork test, test, path, copy, history, configuration, path dependence, dependence, files, agent, identical, soul, different
+
+Computing 2D SVD coordinates...
+Computing quality metrics on SVD-reduced space...
+{
+  "silhouette_cosine_on_svd": 0.051002904636341294,
+  "davies_bouldin_on_svd": 4.343900888045512,
+  "calinski_harabasz_on_svd": 244.9056878279401,
+  "svd_metric_components": 100
+}
+Building output tables...
+Saving output DB: recluster_cluster3_tfidf.db
+
+Done.
+Created tables:
+- cluster3_comments_reclustered
+- cluster3_subcluster_summary
+- cluster3_subcluster_top_terms
+
+Output DB: /mnt/beegfsstudents/home/3194097/NLI_project/recluster_cluster3_tfidf.db
