@@ -1,27 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-"""
-Simple tone analysis only.
-
-Input DB:
-    moltbook_final_NLI_sim_WITH_CLUSTER_AGENT_MAPPING.db
-
-Required source column:
-    body
-
-Output:
-    new SQLite table inside the same DB:
-        tone_analysis
-
-This script does NOT:
-    - run clustering
-    - run NLI
-    - run sycophancy final analysis
-    - run cross-cluster analysis
-    - create subclusters
-"""
-
 import argparse
 import sqlite3
 import re
