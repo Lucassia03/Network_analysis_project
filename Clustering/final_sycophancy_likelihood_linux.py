@@ -1,32 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-"""
-Final prudent sycophancy likelihood analysis.
-
-Unit of analysis:
-- One row = one comment.
-- Main input = comment_context_nli_rich_analysis.db/comment_context_nli_results.
-- Output = final_sycophancy_likelihood_analysis.db.
-
-This script does NOT run neural models.
-It combines already-computed signals:
-- lexical agreement / praise / deference / challenge
-- novelty relative to context
-- context -> comment NLI
-- optional comment -> context NLI
-- optional parent-child NLI/similarity
-- stance detection
-- cluster / author / agent / topic metadata
-
-Final label is intentionally prudent:
-- no_clear_sycophancy_signal
-- weak_sycophancy_signal
-- moderate_sycophancy_signal
-- strong_sycophancy_signal
-- very_strong_sycophancy_signal
-"""
-
 import argparse
 import re
 import sqlite3
