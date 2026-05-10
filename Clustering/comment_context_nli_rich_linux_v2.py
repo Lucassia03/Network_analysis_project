@@ -1,19 +1,3 @@
-"""
-Rich NLI analysis: context -> comment.
-
-Unit of analysis:
-- One row = one comment with one selected best context.
-- NLI pair = selected_context as premise, comment body as hypothesis.
-
-Inputs:
-- core DB: comments/posts/parent_child_similarity/context extraction
-- aux DB: agent predictions, clusters, sycophancy, author-level info
-- topic DB: NMF topic assignments per comment
-
-Output:
-- one SQLite DB with comment-level NLI results and aggregate tables.
-"""
-
 import argparse
 import os
 import re
