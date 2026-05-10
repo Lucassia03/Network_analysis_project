@@ -1,28 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-"""
-Topic modelling NMF su tutti i commenti del database.
-
-Input:
-    moltbook_final_NLI_sim_WITH_CLUSTER_AGENT_MAPPING.db
-
-Tabella sorgente:
-    comments
-
-Output:
-    topic_model_nmf_all_comments.db
-
-Tabelle create:
-    nmf_all_comment_topics
-    nmf_all_topics
-    nmf_all_topic_terms
-    nmf_all_model_config
-
-Dipendenze:
-    pip install pandas numpy scikit-learn nltk
-"""
-
 import re
 import json
 import string
