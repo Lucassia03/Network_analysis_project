@@ -1,8 +1,3 @@
-# ==========================================================
-# Internal cosine similarity for both posts and comments
-# Standalone Linux/HPC version for moltbook_final.db
-# ==========================================================
-
 import re
 import sqlite3
 import numpy as np
