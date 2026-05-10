@@ -337,11 +337,11 @@ However, a systematic divergence emerges in cases where the two methods disagree
 
 This divergence reflects a genuine conceptual difference between the two validation approaches rather than an error on the part of either method. NLI, as implemented in standard transformer-based models, operationalises entailment as a strict logical or semantic dependency between premise and hypothesis; it is a relatively rigid classifier that reserves the entailment label for cases in which the comment’s content is tightly constrained by the parent post. The LLM-as-a-judge, by contrast, draws on broader pragmatic and contextual reasoning when assigning stance labels, and is more willing to classify a contextually responsive or thematically coherent comment as entailment even in the absence of strict logical dependency. In this sense, NLI-as-a-judge is a more conservative and stringent instrument, while LLM-as-a-judge captures a wider notion of alignment that includes pragmatic relevance and contextual responsiveness. The practical implication for interpretation is discussed further in the Limitations section below.
 
-## 5. LLM-as-a-Judge Analysis: Sycophancy in Contextual and Relational Perspective
+## 4. LLM-as-a-Judge Analysis: Sycophancy in Contextual and Relational Perspective
 
 This chapter presents a complementary and substantially extended analysis of the sycophancy corpus conducted via an LLM-as-a-judge pipeline applied to a structured archive of 164 output files (161 CSV and 3 TXT). The analysis operates at a different level of granularity than the keyword-based framework employed in the preceding sections: rather than counting sycophancy-related lexical items, it leverages a multi-component scoring system that captures contextual alignment, stance towards the parent comment and post, discourse depth, and relational anchoring. The archive examined comprises four main datasets: a full corpus of 24,563 comments, a stance subset (n = 9,253) with post and parent orientation labels, and a rich subset of 1,500 comments with full contextual labels and a final sycophancy score. All results derive exclusively from these archived outputs.
 
-### 5.1 Archive Structure and Sample Coverage
+### 4.1 Archive Structure and Sample Coverage
 
 The archive is structurally coherent and analytically tractable. All 161 CSV files parse without encoding or formatting errors. However, the single most important methodological point is that not all labels exist on the same sample: different analytical operations were applied to samples of different sizes, which means that prevalence estimates from the rich subset cannot be generalised to the full corpus.
 
@@ -358,7 +358,7 @@ The coverage of key label families in the full corpus reflects deliberate sampli
 
 Two minor redundancies were identified: the two rich_1500 datasets are byte-for-byte identical, and distribution_extraction_method.csv duplicates extraction_method_summary.csv. These redundancies do not affect results but inflate the apparent file count. Within the rich subset, rich_context_type and extracted_context_type are also identical, as are the corresponding confidence variables.
 
-### 5.2 Post vs. Parent Stance: Structural Asymmetry
+### 4.2 Post vs. Parent Stance: Structural Asymmetry
 
 A fundamental structural asymmetry characterises comment orientation in this corpus. In the stance subset (n = 9,253), support for the original post is far more frequent than support for the immediate parent comment. The share of comments classified as supportive of the post is 78.3%, while the share supportive of the parent is only 37.9%. The association between llm_stance_post and llm_stance_parent is highly significant but reflects this asymmetry: χ²(4) = 508.33, p = 1.06e−108, Cramér’s V = 0.166.
 
@@ -376,7 +376,7 @@ Row-percentage analysis shows that among comments classified as supportive of th
 
 This asymmetry is substantively important for the sycophancy analysis: the LLM judge detects a tendency for comments to align with the post’s topic or framing far more often than with the conversational move immediately preceding them. As the remaining sections show, it is the latter form of alignment—parent-oriented rather than post-oriented—that drives the sycophancy signal.
 
-### 5.3 Context Extraction: Method and Coverage
+### 4.3 Context Extraction: Method and Coverage
 
 In the full corpus, the pipeline extracts a contextual reference for each comment using a heuristic fallback procedure. The extracted_context_type variable identifies six distinct reference types, of which two dominate: prior_sibling_reference (49.8%) and broader_thread_reference (26.5%). Direct reference to the post accounts for 12.6%, while parent_reply covers 9.3%.
 
@@ -394,13 +394,13 @@ In the full corpus, the pipeline extracts a contextual reference for each commen
 
 Two methodological observations follow from this distribution. First, parent_reply shows the highest mean confidence (0.955), while ambiguous shows the lowest (0.269): the parser distinguishes well-anchored local references from genuinely ambiguous ones. Second, and critically, extraction_method equals heuristic_fallback for 100% of cases. There is no second parsing family in the archive. This means that all subsequent contextual analyses describe the behaviour of this specific heuristic pipeline, not a generalised inference procedure, and cross-pipeline comparison is not possible from these data alone.
 
-### 5.4 Rich Subset: Context, Stance, and Alignment
+### 4.4 Rich Subset: Context, Stance, and Alignment
 
 In the rich subset (n = 1,500), the distribution of context types shifts substantially relative to the full corpus: broader_thread_reference becomes dominant (61.3%), followed by prior_sibling_reference (27.5%), with parent_reply (6.5%) and post_direct (4.0%) accounting for most of the remainder. The LLM judge’s assessment of comment stance towards the extracted context shows a strong tendency towards Entailment (71.9%), with Neutral at 25.3% and Contradiction at only 2.9%. Context alignment classification yields: context_aligned (n = 929), context_neutral_or_new_information (n = 467), and context_contradicting (n = 104).
 
 The association between rich_context_type and llm_stance_context is statistically significant but modest: χ²(10) = 42.10, p = 7.19e−06, V = 0.118. Informative standardised residuals include parent_reply × Contradiction (+3.73), post_direct × Neutral (+2.78), and prior_sibling_reference × Entailment (+1.04): parent-directed replies are more likely to be contradictory, while direct post references are more likely to be judged neutral. By contrast, context_alignment_label and llm_stance_context are not significantly associated (χ²(4) = 4.30, p = 0.366), indicating that alignment and entailment, while conceptually related, capture empirically distinct properties in this workflow.
 
-### 5.5 Final Sycophancy Label and Score Distribution
+### 4.5 Final Sycophancy Label and Score Distribution
 
 The LLM-as-a-judge pipeline yields a three-category final label and a continuous likelihood score. The label distribution in the rich subset is deliberately cautious: the majority of cases receive no_clear_sycophancy_signal (n = 782, 52.1%), nearly half receive weak_sycophancy_signal (n = 686, 45.7%), and only 32 cases (2.1%) are classified as moderate_sycophancy_signal. There is no strong sycophancy category in the current schema.
 
@@ -420,7 +420,7 @@ The score increases monotonically with label: the mean is 0.103 for no_clear, 0.
 
 Examination of the component scores that feed into the final likelihood reveals that the pipeline does not weight verbal flattery heavily. Mean values for praise-oriented components are low (syco_praise_score = 0.018, syco_deference_score = 0.010), while structural alignment components are substantially higher (syco_context_alignment_component = 0.666, syco_parent_child_alignment_component = 0.515). Spearman correlations with the final score confirm this: syco_cross_cluster_interaction_component (r = 0.856), syco_parent_child_alignment_component (r = 0.784), and syco_context_alignment_component (r = 0.713) are the strongest predictors. The verbal challenge score is negatively correlated (r = −0.237), consistent with the interpretation that substantive disagreement suppresses the sycophancy signal.
 
-### 5.6 Bivariate Associations with Final Sycophancy Label
+### 4.6 Bivariate Associations with Final Sycophancy Label
 
 Chi-square tests confirm that several discourse-level variables are strongly associated with the final sycophancy label, while others are not. The results are reported in the appendix table; here we focus on the most interpretively significant patterns.
 
@@ -434,15 +434,15 @@ Tone is a significant predictor (V = 0.198): agreeing-tone comments have the
 
 By contrast, post stance (llm_stance_post) shows no significant association with the final sycophancy label (χ²(4) = 3.60, p = 0.464, V = 0.035). This null result is one of the most substantively important findings of the entire analysis: simple supportive alignment with the original post does not explain sycophancy. It is the relationship with the immediate conversational partner and context—not the topic of the thread—that drives the signal.
 
-### 5.7 Kruskal–Wallis Tests on the Continuous Score
+### 4.7 Kruskal–Wallis Tests on the Continuous Score
 
 Kruskal–Wallis tests on the continuous final_sycophancy_likelihood replicate the categorical pattern with high precision. The strongest effect is again for context_alignment_label (H = 724.25, p = 5.39e−158, ε² = 0.482). The epsilon-squared value of 0.482 indicates that context alignment alone accounts for nearly half of the rank-based variation in sycophancy scores—a substantially larger effect than any covariate in the keyword-based analysis. The next strongest predictors are llm_stance_parent (H = 128.22, ε² = 0.084), rich_context_type (H = 112.99, ε² = 0.072), and tone_label (H = 83.15, ε² = 0.050).
 
 Variables with smaller but statistically significant effects include llm_external_reference_detected (ε² = 0.008), bert_predicted_model (ε² = 0.007), dominant_topic (ε² = 0.009), and llm_stance_context (ε² = 0.005). As in the categorical analysis, llm_stance_post does not reach significance (H = 4.08, p = 0.130, ε² = 0.001). The model label effect (ε² = 0.007) is noteworthy in that it replicates, at smaller magnitude, the model-level sycophancy differences established in Chapter 3 using keyword counts. Within the rich subset, claude-attributed comments tend to score higher on the continuous likelihood scale than chatgpt-attributed comments, consistent with the earlier finding.
 
-### 5.8 Multivariate Models
+### 4.8 Multivariate Models
 
-#### 5.8.1 OLS Regression on the Continuous Score
+#### 4.8.1 OLS Regression on the Continuous Score
 
 An OLS regression on final_sycophancy_likelihood using 1,360 complete cases yields an R² = 0.711, indicating that the set of predictors jointly explains approximately 71% of the variance in the continuous sycophancy score. The model converges without issues.
 
@@ -450,17 +450,17 @@ The most important positive predictors, relative to their respective reference c
 
 The OLS results reinforce the theoretical picture: sycophancy in this pipeline reflects relational anchoring, depth in the conversation, and lexical alignment with the immediate context, not merely the direction of stance relative to the post. The llama coefficient replicates the model-level direction found in earlier analyses.
 
-#### 5.8.2 Logistic Regression Results
+#### 4.8.2 Logistic Regression Results
 
 A full logistic regression on the binary sycophancy_any variable does not converge. The non-convergence is traceable to a specific source: the tone category polite_positive appears in only 2 observations, both of which fall in the sycophancy group. This produces near-perfect separation, inflating the coefficient for that category to an astronomically large value. The full logit is therefore not a reliable basis for quantitative inference, though the direction of its coefficients is broadly consistent with the OLS and descriptive evidence.
 
 A reduced logistic model including only support_post, support_parent, their interaction, comment_depth, and sycophancy_keyword_count converges successfully. The key finding is an interaction effect: support_post alone has a negative coefficient (OR = 0.569, p = 0.039), support_parent alone is non-significant (OR = 0.839, p = 0.726), but the joint support_both term is positive and significant (OR = 2.831, p = 0.040). Supporting both post and parent simultaneously more than doubles the odds of a positive sycophancy signal. Depth (OR = 1.767, p = 0.0003) and keyword count (OR = 1.188, p = 0.0017) also increase the odds. The interaction finding is theoretically coherent: it identifies simultaneous relational alignment as the operative mechanism, not unidirectional agreement with either the post or the parent considered separately.
 
-### 5.9 External References and Conversational Memory
+### 4.9 External References and Conversational Memory
 
 In the rich subset, llm_external_reference_detected is fully observed and shows a small but significant association with final sycophancy (χ²(4) = 23.07, p = 0.00012, V = 0.088). The unclear category shows the highest mean score (0.206), above Yes (0.187) and No (0.169). Comments where the model “senses” an external reference but cannot classify it tend to have marginally higher sycophancy scores, suggesting a link between referential ambiguity and accommodating communicative posture. The llm_external_reference_type variable shows an even smaller effect (V = 0.058, p = 0.047) that does not survive FDR correction in the global test set. These external reference results are best treated as secondary and exploratory.
 
-### 5.10 Methodological Limitations of the LLM-as-a-Judge Pipeline
+### 4.10 Methodological Limitations of the LLM-as-a-Judge Pipeline
 
 Several limitations constrain interpretation of the results presented in this chapter.
 
@@ -472,7 +472,7 @@ Third, several of the strongest predictors in the OLS model (context_grounding_s
 
 Fourth, all context extraction uses heuristic_fallback as the sole method. There is no second-pass LLM-based parsing family in the archive. Results therefore describe the behaviour of this specific heuristic under these specific corpus conditions.
 
-### 5.11 Summary: What LLM-as-a-Judge Adds
+### 4.11 Summary: What LLM-as-a-Judge Adds
 
 The LLM-as-a-judge analysis adds three substantive contributions to the account developed in Chapters 1–4.
 
@@ -482,7 +482,7 @@ Second, it identifies parent alignment and contextual anchoring as the operative
 
 Third, the pipeline characterises sycophancy as a cautious and structurally grounded signal: only 2.1% of rich-subset comments reach moderate status, and the score is dominated by structural alignment components rather than verbal flattery markers. This complements the keyword-based approach by providing a relational and contextual dimension that pure lexical counting cannot capture. Together, the two approaches converge on a coherent theoretical account: sycophancy in this corpus is a phenomenon of local conversational accommodation, shaped by depth, context type, and alignment with the immediate interactional environment rather than by abstract agreement with the topic of discussion.
 
-### 5.12 Appendix: Summary of Principal Statistical Tests
+### 4.12 Appendix: Summary of Principal Statistical Tests
 
 | **Test**                                  | **χ² / H** | **p-value** | **V / ε²** | **Note**          |
 |-------------------------------------------|------------|-------------|------------|-------------------|
@@ -503,11 +503,11 @@ Third, the pipeline characterises sycophancy as a cautious and structurally grou
 
 *Table A5. Summary of chi-square and Kruskal–Wallis tests from the LLM-as-a-judge archive (rich subset, n = 1,500 unless otherwise noted).*
 
-## 4. Conclusion: What Influences Sycophancy?
+## 5. Conclusion: What Influences Sycophancy?
 
 This paper set out to understand the distribution and determinants of sycophantic language in a corpus of online posts and comments from an AI-focused community. Across three distinct analytical dimensions — thematic content, predicted model identity, and semantic NLI relationship — the evidence converges on a coherent picture that has both methodological and substantive implications.
 
-### 4.1 Topic and Thematic Context Are the Dominant Drivers
+### 5.1 Topic and Thematic Context Are the Dominant Drivers
 
 The most powerful predictor of sycophancy in this corpus is the thematic context of the comment. Both the TF-IDF cluster analysis and the NMF topic analysis demonstrate that sycophantic language is not uniformly distributed across the conversational space: it is systematically concentrated in specific thematic regions.
 
@@ -517,7 +517,7 @@ The cluster-level analysis tells the same story with greater granularity. Cluste
 
 The strong author specialisation across clusters (with a mean dominant-cluster share of 0.906) implies that these topical differences are not merely stylistic noise introduced by individual-level variation. Authors are embedded in specific communities and tend to communicate according to the norms of those communities. Sycophantic language, on this interpretation, is a community-level phenomenon as much as an individual-level one.
 
-### 4.2 Predicted Model Identity Is a Significant but Secondary Predictor
+### 5.2 Predicted Model Identity Is a Significant but Secondary Predictor
 
 Unlike earlier analyses that were constrained to a small labelled subset of roughly 1,900 comments and found no significant model-level differences, the full-corpus analysis presented here — covering 23,492 observations — reveals a clear and robust association between predicted model identity and sycophancy. The Kruskal-Wallis effect size of ε² = 0.0473 indicates that model identity accounts for approximately 4.7% of the rank-based variation in sycophancy keyword counts, a substantively meaningful quantity. For comparison, this is roughly half the effect size of NMF topic membership (ε² = 0.1035), placing model identity as a genuine but secondary predictor of sycophancy.
 
@@ -527,7 +527,7 @@ These results raise an important interpretive question: what drives the ChatGPT-
 
 Regardless of the causal mechanism, the empirical finding is robust and consequential: the predicted AI model label is a meaningful correlate of sycophancy in this corpus. The earlier null result — obtained from only 1,934 observations, with very small and roughly balanced model groups — was almost certainly a case of insufficient statistical power. With 23,492 observations and prediction confidence averaging above 0.90, the current analysis is far better positioned to detect genuine model-level differences, and it does so unambiguously.
 
-### 4.3 Sycophancy is Not Semantic Agreement: The NLI Evidence
+### 5.3 Sycophancy is Not Semantic Agreement: The NLI Evidence
 
 The most theoretically significant finding of this paper is the relationship between sycophancy and NLI labels. If sycophancy were simply a conversational expression of semantic agreement — the linguistic form taken by the logical content of entailment — then one would expect entailment comments to be the most sycophantic. The data consistently and strongly contradicts this prediction.
 
@@ -539,7 +539,7 @@ Contradiction comments, while less sycophantic than neutral comments, are still 
 
 The weak but statistically significant association between NLI category and sycophancy (ε² = 0.0129, Cramér's V = 0.084) confirms that the two constructs are not independent. But the direction of the association and the small effect sizes imply that sycophancy is better understood as a pragmatic style of social validation than as a proxy for semantic alignment.
 
-### 4.4 Summary of Findings
+### 5.4 Summary of Findings
 
 Taken together, the findings of this study lead to three principal conclusions about the determinants of sycophancy in this corpus:
 
@@ -549,7 +549,7 @@ Taken together, the findings of this study lead to three principal conclusions a
 
 5.  **Sycophancy is not semantic agreement and cannot be reduced to NLI entailment.** Entailment comments are the least sycophantic, while semantically neutral comments are the most sycophantic. The effect size at the NLI level (ε² = 0.0129) is the smallest of the three covariates. Sycophancy is better understood as a pragmatic style of social validation — a communicative stance of positive reinforcement — than as a direct expression of logical or semantic alignment with the parent post.
 
-### 4.5 Limitations and Future Directions
+### 5.5 Limitations and Future Directions
 
 Several limitations of this study should be acknowledged. First, the keyword-based operationalisation of sycophancy is a pragmatic proxy, not a gold-standard psychological measure. Terms such as "right" and "interesting" can appear in substantive non-sycophantic contexts, and some genuinely sycophantic comments may use vocabulary not captured by the keyword list. Future work should complement keyword counting with more sophisticated sentiment or pragmatic analysis methods, ideally validated against human judgements.
 
