@@ -7,7 +7,7 @@ import pandas as pd
 # ==========================================================
 
 # Database containing the parent-child cosine similarity table
-SIMILARITY_DB = "moltbook_final.db"
+SIMILARITY_DB = "moltbook_final_NLI_sim.db"
 
 # Database containing the clustering output
 CLUSTER_DB = "cluster_agent_mapping.db"
