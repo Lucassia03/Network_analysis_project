@@ -16,7 +16,7 @@ from sklearn.cluster import KMeans
 # CONFIG
 # --------------------------------------------------
 
-COMMENTS_DB = "moltbook_final.db"
+COMMENTS_DB = "moltbook_final_NLI_sim.db"
 AGENTS_DB = "agent_predictions_from_json.db"
 OUTPUT_DB = "cluster_agent_mapping.db"
 
