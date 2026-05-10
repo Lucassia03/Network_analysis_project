@@ -2,6 +2,9 @@
 
 *A Descriptive and Non-Parametric Analysis of Linguistic Validation Patterns*
 
+## Note for the Usage
+At this stage the user is required to manually set the refered Database: there is no .src implemented, and the file have to be runned manually.
+
 ## Abstract
 
 This study examines sycophantic language patterns in a large corpus of online posts and comments originating from a community engaged with AI-related topics. Drawing on a dataset of 822 posts and 24,563 comments, we operationalise sycophancy through a keyword-based scoring framework and relate it to three sets of covariates: (i) Natural Language Inference (NLI) labels and cosine similarity scores measuring the semantic relationship between comments and parent posts; (ii) TF-IDF-derived thematic clusters and NMF topic assignments capturing the subject matter of comments; and (iii) predicted AI model authorship labels across the full set of 23,492 observations. Non-parametric tests — including Kruskal-Wallis, Mann-Whitney U, chi-square, Spearman correlations, and permutation analyses — consistently indicate that sycophancy is strongly associated with thematic content and significantly associated with predicted model identity, and weakly but significantly associated with NLI category. Crucially, sycophancy is highest in semantically neutral comments rather than in those that logically entail the parent post, suggesting that sycophantic language functions primarily as a pragmatic style of social validation rather than as semantic agreement. At the model level, ChatGPT-attributed comments are substantially less sycophantic than those attributed to Claude, DeepSeek, and Llama, a difference that is robust across all tests. These findings have implications for the study of AI-generated text, online communication dynamics, and the measurement of sycophancy as a communicative phenomenon.
