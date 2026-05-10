@@ -174,33 +174,6 @@ It is **not reducible to semantic entailment** or broad agreement with the origi
 - LLM-as-a-judge labels are prompt-sensitive and available only on subsets of the data.
 - Some strong LLM-as-a-judge predictors are components of the same scoring pipeline that produces the final likelihood score.
 
-## Suggested Repository Structure
-
-```text
-.
-├── README.md
-├── data/
-│   ├── raw/
-│   ├── processed/
-│   └── outputs/
-├── notebooks/
-│   ├── 01_nli_and_similarity.ipynb
-│   ├── 02_topic_modeling.ipynb
-│   ├── 03_model_attribution.ipynb
-│   ├── 04_llm_as_judge_analysis.ipynb
-│   └── 05_regression_checks.ipynb
-├── scripts/
-│   ├── build_features.py
-│   ├── run_nonparametric_tests.py
-│   ├── run_regressions.py
-│   └── export_tables.py
-├── results/
-│   ├── tables/
-│   ├── figures/
-│   └── regression_outputs/
-└── paper/
-    └── manuscript.docx
-```
 
 ## Reproducibility Notes
 
