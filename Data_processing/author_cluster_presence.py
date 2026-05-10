@@ -1,27 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-"""
-Author cluster presence analysis.
-
-Input:
-    moltbook_final_NLI_sim_WITH_CLUSTER_AGENT_MAPPING.db
-
-Source table:
-    comments
-
-Output:
-    author_cluster_presence.db
-
-Created table:
-    author_cluster_presence
-
-Purpose:
-    - Cluster all comments into N_CLUSTERS thematic TF-IDF/KMeans clusters.
-    - Count, for each author, how many comments they have in each cluster.
-    - Report in how many clusters each author appears.
-"""
-
 import re
 import string
 import sqlite3
